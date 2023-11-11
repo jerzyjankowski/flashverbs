@@ -1,3 +1,26 @@
+# Backlog
+- git
+- PWA
+- zegarek u góry
+- czasowniki dla innych języków
+- opcja samych nieregularnych
+- słówka po równo (zawsze najpierw te, które najmniej razy się pojawiały)
+- zapisanie obecnych słówek (ID w local storage) i wczytywanie
+- rozbić na komponenty
+- obiekt settings zamiast pojedynczych wartości
+- ikonka/favicon
+
+# Versions
+## 0.1.0
+- config with 140 italian verbs with presentIndicative conjugation splitted in regular groups and irregular group
+- starting lesson with 10/20/30/all random flashcards
+- displaying flashcard (question on top, answer below)
+- header with number of turns and flashcards left
+- footer to display answer or react on answer (learnt and removed from current pool, or next)
+- clicking answer displays conjugation
+- clicking question opens settings (restart questions learnt field, reverse question pl->it or it->pl)
+- started Backlog and versions in README
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
