@@ -1,0 +1,7 @@
+{
+  "name": "italian flashcards",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

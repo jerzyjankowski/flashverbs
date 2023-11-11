@@ -1,0 +1,8 @@
+{
+  "appId": "pl.jjankowski.italianflashcards",
+  "appName": "italian flashcards",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {}
+}

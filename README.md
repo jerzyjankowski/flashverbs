@@ -1,6 +1,4 @@
 # Backlog
-- git
-- PWA
 - zegarek u góry
 - czasowniki dla innych języków
 - opcja samych nieregularnych
@@ -8,9 +6,23 @@
 - zapisanie obecnych słówek (ID w local storage) i wczytywanie
 - rozbić na komponenty
 - obiekt settings zamiast pojedynczych wartości
-- ikonka/favicon
+- icon/favicon
+
+# Run app on Android
+
+run command:
+```ionic capacitor add android```
+run:
+```npx cap open android```
+Android Studio will run. Run app on Android phone.
 
 # Versions
+
+## 0.1.1
+- ionic, capacitor, android app
+  https://medium.com/how-to-react/convert-your-existing-react-js-app-to-android-or-ios-app-using-the-ionic-capacitor-a127deda75bd
+  https://capacitorjs.com/docs/getting-started - "npm i -D @capacitor/cli"
+- 
 ## 0.1.0
 - config with 140 italian verbs with presentIndicative conjugation splitted in regular groups and irregular group
 - starting lesson with 10/20/30/all random flashcards
@@ -21,6 +33,9 @@
 - clicking question opens settings (restart questions learnt field, reverse question pl->it or it->pl)
 - started Backlog and versions in README
 
+
+
+// TODO: clean-up:
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
