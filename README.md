@@ -1,11 +1,8 @@
 # Backlog
 - zegarek u góry
 - czasowniki dla innych języków
-- opcja samych nieregularnych
-- słówka po równo (zawsze najpierw te, które najmniej razy się pojawiały)
 - zapisanie obecnych słówek (ID w local storage) i wczytywanie
 - rozbić na komponenty
-- obiekt settings zamiast pojedynczych wartości
 - icon/favicon
 - Bitbucket repository
 

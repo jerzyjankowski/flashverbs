@@ -29,7 +29,10 @@ const Engine = () => {
         const cards = []
         for (let i = 0; i < maxNumberOfCards && cardsToRandomize.length > 0; i++) {
             const cardId = Math.floor(Math.random() * cardsToRandomize.length)
-            cards.push(cardsToRandomize[cardId])
+            cards.push({
+                ...cardsToRandomize[cardId],
+                repetitions: 0
+            })
             cardsToRandomize = [
                 ...cardsToRandomize.slice(0, cardId),
                 ...cardsToRandomize.slice(cardId + 1),
@@ -46,7 +49,11 @@ const Engine = () => {
     const randomizeFlashcard = (turn: number, flashcards: Card[]) => {
         const cardsToLearn = flashcards.filter(card => !card.learnt)
         const omitLastTurns = cardsToLearn.length > 3 ? 3 : cardsToLearn.length - 1
-        const cardsToRandomize = cardsToLearn.filter(card => !card.lastTurn || turn - omitLastTurns > card.lastTurn)
+        let cardsToRandomize = cardsToLearn.filter(card => !card.lastTurn || turn - omitLastTurns > card.lastTurn)
+        if (configuration.sameSpeed) {
+            const minRepetitions = Math.min(...cardsToRandomize.map(card => card.repetitions || 0))
+            cardsToRandomize = cardsToRandomize.filter(card => card.repetitions === minRepetitions)
+        }
         const cardId = Math.floor(Math.random() * cardsToRandomize.length)
         setCurrentCard(cardsToRandomize[cardId])
     }
@@ -66,6 +73,7 @@ const Engine = () => {
             ...flashcards.slice(0, cardArrayId),
             {
                 ...flashcards[cardArrayId],
+                repetitions: currentCard!.repetitions! + 1,
                 lastTurn: turn,
                 learnt
             },

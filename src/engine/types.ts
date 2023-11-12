@@ -4,6 +4,7 @@ export type Card = {
     pl: string
     learnt?: boolean
     lastTurn?: number
+    repetitions?: number
     presentIndicative: {
         singular: {
             first: string,
