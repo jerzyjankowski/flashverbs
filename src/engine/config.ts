@@ -162,7 +162,7 @@ const irregular: Card[] = [    { id: 110, it: "essere", pl: "(być)", presentInd
     { id: 137, it: "piacere", pl: "(podobać się)", presentIndicative: { singular: { first: "mi piace", second: "ti piace", third: "gli piace" }, plural: { first: "ci piace", second: "vi piace", third:"gli piace" }}},
     { id: 138, it: "dispiacere", pl: "(być przykro)", presentIndicative: { singular: { first: "mi dispiace", second: "ti dispiace", third: "gli dispiace" }, plural: { first: "ci dispiace", second: "vi dispiace", third:"gli dispiace" }}},
     { id: 139, it: "mancare", pl: "(brakować)", presentIndicative: { singular: { first: "mi manca", second: "ti manca", third: "gli manca" }, plural: { first: "ci manca", second: "vi manca", third:"gli manca" }}},
-    { id: 140, it: "interessare", pl: "(dotoczyć, interesować)", presentIndicative: { singular: { first: "mi interessa", second: "ti interessa", third: "gli interessa" }, plural: { first: "ci interessa", second: "vi interessa", third:"gli interessa" }}},
+    { id: 140, it: "interessare", pl: "(dotyczyć, interesować)", presentIndicative: { singular: { first: "mi interessa", second: "ti interessa", third: "gli interessa" }, plural: { first: "ci interessa", second: "vi interessa", third:"gli interessa" }}},
 ]
 
 const all = [

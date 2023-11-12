@@ -1,5 +1,4 @@
 # Backlog
-- zegarek u góry
 - czasowniki dla innych języków
 - zapisanie obecnych słówek (ID w local storage) i wczytywanie
 - rozbić na komponenty
@@ -22,6 +21,16 @@ npx cap open android
 Android Studio will run. After loading time run app on connected Android phone.
 
 # Versions
+
+## 0.2.0
+- better android app creation (package.json script)
+- start menu configuration
+  - cards pool: all, irregular, saved, test
+  - max number of cards: 10/20/30/all
+  - question type: from native or to native
+  - questioning speed: all unlearnt questions asked the same number of time or fully randomized - still keeping 3 questions distance
+- clock for questions time
+- saving and loading current set of unlearnt questions
 
 ## 0.1.1
 - ionic, capacitor, android app

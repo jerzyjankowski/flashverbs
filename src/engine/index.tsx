@@ -1,6 +1,6 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import config from "./config"
-import {Card, CardsPool} from "./types";
+import {Card, CardsPool, Configuration as ConfigurationType} from "./types";
 import './index.css';
 import {Configuration} from "./components";
 import {useConfiguration} from "./hooks/useConfiguration";
@@ -16,7 +16,10 @@ const Engine = () => {
     const [ startTime, setStartTime ] = useState(new Date().getTime())
     const [ displayTime, setDisplayTime ] = useState('00:00')
 
-    const { configuration, setFromNative } = useConfiguration()
+    const {
+        configuration,
+        setFromNative,
+    } = useConfiguration()
 
     const updateTime = useCallback(() => {
         const timeDeltaSeconds =  Math.floor((new Date().getTime() - startTime) / 1000)
@@ -25,13 +28,21 @@ const Engine = () => {
         const newDisplayTime = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
         setDisplayTime(newDisplayTime)
     }, [startTime, setDisplayTime])
-    setInterval(updateTime, 200);
+    useEffect(
+        () => {
+            const intervalId = setInterval(updateTime, 200)
+            return () => clearInterval(intervalId)
+        }, [updateTime])
 
     const initializeFlashcards = () => {
         const { maxNumberOfCards, cardsPool } = configuration
-        let cardsToRandomize: Card[] = []
-        if (cardsPool === CardsPool.ALL || cardsPool === CardsPool.SAVED) {
-            cardsToRandomize = [...config.all]
+        let cardsToRandomize: Card[] = [...config.all] // CardsPool.ALL or CardsPool.SAVED if none saved
+        if (cardsPool === CardsPool.SAVED) {
+            const questionsIdsSavedText = localStorage.getItem("questions")
+            if (questionsIdsSavedText) {
+                const questionsIdsSaved = JSON.parse(questionsIdsSavedText) as number[]
+                cardsToRandomize = [...config.all.filter(card => questionsIdsSaved.indexOf(card.id) > -1)]
+            }
         } else if (cardsPool === CardsPool.IRREGULAR) {
             cardsToRandomize = [...config.irregular]
         } else if (cardsPool === CardsPool.TEST) {
@@ -54,6 +65,7 @@ const Engine = () => {
         setTurn(1)
         setFlashcards(cards)
         setLeftToLearn(cards.length)
+        setStartTime(new Date().getTime())
         return cards
     }
 
@@ -121,11 +133,16 @@ const Engine = () => {
             setCurrentCard(undefined)
             hideModal()
         }
+        const saveQuestions = () => {
+            const questionsIds = flashcards.filter(card => !card.learnt).map(card => card.id)
+            localStorage.setItem("questions", `${JSON.stringify(questionsIds)}`)
+        }
         return settingsModalOpen && <div className="settingsModalWrapper" onClick={hideModal}>
           <div className="settingsModal" onClick={event => event.stopPropagation()}>
             <h1>SETTINGS</h1>
             <button onClick={reverseQuestions}>reverse questions</button>
             <button onClick={restartQuestions}>restart questions</button>
+            <button onClick={saveQuestions}>save hard questions</button>
             <button onClick={closeQuestions}>close questions</button>
             <button onClick={hideModal}>close settings</button>
           </div>
