@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import config from "./config"
 import {Card, CardsPool} from "./types";
 import './index.css';
@@ -13,8 +13,19 @@ const Engine = () => {
     const [ leftToLearn, setLeftToLearn ] = useState(0)
     const [ turn, setTurn ] = useState(1)
     const [ settingsModalOpen, setSettingsModalOpen ] = useState(false)
+    const [ startTime, setStartTime ] = useState(new Date().getTime())
+    const [ displayTime, setDisplayTime ] = useState('00:00')
 
     const { configuration, setFromNative } = useConfiguration()
+
+    const updateTime = useCallback(() => {
+        const timeDeltaSeconds =  Math.floor((new Date().getTime() - startTime) / 1000)
+        const seconds = timeDeltaSeconds % 60
+        const minutes = Math.floor(timeDeltaSeconds / 60)
+        const newDisplayTime = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
+        setDisplayTime(newDisplayTime)
+    }, [startTime, setDisplayTime])
+    setInterval(updateTime, 200);
 
     const initializeFlashcards = () => {
         const { maxNumberOfCards, cardsPool } = configuration
@@ -127,7 +138,7 @@ const Engine = () => {
 
     const getHeader = () => {
         return currentCard && <div className="header">
-            Turn: {turn}, Flashcards left: {leftToLearn}
+            Turn: {turn}, Flashcards left: {leftToLearn}, Time: {displayTime}
         </div>
     }
 
