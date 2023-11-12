@@ -186,7 +186,7 @@ const config = {
     regularReflexive,
     irregular,
     all,
-    // all: test
+    test,
 }
 
 export default config

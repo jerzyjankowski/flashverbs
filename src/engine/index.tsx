@@ -1,7 +1,9 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useState} from "react";
 import config from "./config"
-import {Card} from "./types";
+import {Card, CardsPool} from "./types";
 import './index.css';
+import {Configuration} from "./components";
+import {useConfiguration} from "./hooks/useConfiguration";
 
 const Engine = () => {
     const [ flashcards, setFlashcards ] = useState<Card[]>([])
@@ -11,12 +13,21 @@ const Engine = () => {
     const [ leftToLearn, setLeftToLearn ] = useState(0)
     const [ turn, setTurn ] = useState(1)
     const [ settingsModalOpen, setSettingsModalOpen ] = useState(false)
-    const [ questionsFromNative, setQuestionsFromNative ] = useState(true)
 
-    const initializeFlashcards = (cardsCap: number) => {
-        let cardsToRandomize = [...config.all]
+    const { configuration, setFromNative } = useConfiguration()
+
+    const initializeFlashcards = () => {
+        const { maxNumberOfCards, cardsPool } = configuration
+        let cardsToRandomize: Card[] = []
+        if (cardsPool === CardsPool.ALL || cardsPool === CardsPool.SAVED) {
+            cardsToRandomize = [...config.all]
+        } else if (cardsPool === CardsPool.IRREGULAR) {
+            cardsToRandomize = [...config.irregular]
+        } else if (cardsPool === CardsPool.TEST) {
+            cardsToRandomize = [...config.test]
+        }
         const cards = []
-        for (let i = 0; i < cardsCap && cardsToRandomize.length > 0; i++) {
+        for (let i = 0; i < maxNumberOfCards && cardsToRandomize.length > 0; i++) {
             const cardId = Math.floor(Math.random() * cardsToRandomize.length)
             cards.push(cardsToRandomize[cardId])
             cardsToRandomize = [
@@ -40,8 +51,8 @@ const Engine = () => {
         setCurrentCard(cardsToRandomize[cardId])
     }
 
-    const start = (cardsCap: number) => {
-        const cards = initializeFlashcards(cardsCap)
+    const start = () => {
+        const cards = initializeFlashcards()
         randomizeFlashcard(turn, cards)
     }
 
@@ -84,7 +95,11 @@ const Engine = () => {
             hideModal()
         }
         const reverseQuestions = () => {
-            setQuestionsFromNative(flag => !flag)
+            setFromNative(!configuration.fromNative)
+            hideModal()
+        }
+        const closeQuestions = () => {
+            setCurrentCard(undefined)
             hideModal()
         }
         return settingsModalOpen && <div className="settingsModalWrapper" onClick={hideModal}>
@@ -92,6 +107,7 @@ const Engine = () => {
             <h1>SETTINGS</h1>
             <button onClick={reverseQuestions}>reverse questions</button>
             <button onClick={restartQuestions}>restart questions</button>
+            <button onClick={closeQuestions}>close questions</button>
             <button onClick={hideModal}>close settings</button>
           </div>
         </div>
@@ -110,10 +126,7 @@ const Engine = () => {
     const getFooter = () => {
         if (!currentCard) {
             return <div className="buttons">
-                <button onClick={() => start(10)}>START 10</button>
-                <button onClick={() => start(20)}>START 20</button>
-                <button onClick={() => start(30)}>START 30</button>
-                <button onClick={() => start(config.all.length)}>START ALL</button>
+                <button onClick={start}>START</button>
             </div>
         }
         if (currentCard && questionTurn) {
@@ -136,10 +149,10 @@ const Engine = () => {
             {getSettingsModal()}
             {getHeader()}
             {currentCard && !showConjugation && <div className="card" onClick={openSettingsModal}>
-                {questionsFromNative ? currentCard.pl : currentCard.it}
+                {configuration.fromNative ? currentCard.pl : currentCard.it}
             </div>}
             {currentCard && !showConjugation && <div className="card" onClick={() => questionTurn ? null : setShowConjugation(true)}>
-                {questionTurn ? '?' : questionsFromNative ? currentCard.it : currentCard.pl}
+                {questionTurn ? '?' : configuration.fromNative ? currentCard.it : currentCard.pl}
             </div>}
             {currentCard && showConjugation && <div className="card conjugation" onClick={() => setShowConjugation(false)}>
               <span>{currentCard.pl}</span>
@@ -154,7 +167,7 @@ const Engine = () => {
               <span>{currentCard.presentIndicative.plural.second}</span>
               <span>{currentCard.presentIndicative.plural.third}</span>
             </div>}
-            {!currentCard && <div className="card"/>}
+            {!currentCard && <div className="card"><Configuration /></div>}
             {getFooter()}
         </div>
     );

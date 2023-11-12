@@ -17,3 +17,17 @@ export type Card = {
         }
     }
 }
+
+export enum CardsPool {
+    ALL = 'ALL',
+    IRREGULAR = 'IRREGULAR',
+    SAVED = 'SAVED',
+    TEST = 'TEST',
+}
+
+export type Configuration = {
+    maxNumberOfCards: number
+    cardsPool: CardsPool
+    fromNative: boolean
+    sameSpeed: boolean
+}
