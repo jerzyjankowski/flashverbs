@@ -7,14 +7,22 @@
 - rozbić na komponenty
 - obiekt settings zamiast pojedynczych wartości
 - icon/favicon
+- Bitbucket repository
 
 # Run app on Android
 
-run command:
-```ionic capacitor add android```
-run:
-```npx cap open android```
-Android Studio will run. Run app on Android phone.
+one command:
+```npm run android```
+or those steps:
+
+remove android folder
+run commands:
+```
+npm run build
+ionic capacitor add android
+npx cap open android
+```
+Android Studio will run. After loading time run app on connected Android phone.
 
 # Versions
 
