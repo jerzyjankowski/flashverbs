@@ -1,9 +1,6 @@
 # Backlog
-- czasowniki dla innych języków
-- zapisanie obecnych słówek (ID w local storage) i wczytywanie
-- rozbić na komponenty
-- icon/favicon
-- Bitbucket repository
+- verbs for other languages than italian
+- refactor, styled comopnents, split into comopnents, etc.
 
 # Run app on Android
 
