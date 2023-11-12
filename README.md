@@ -22,6 +22,10 @@ Android Studio will run. After loading time run app on connected Android phone.
 
 # Versions
 
+## 0.2.1
+- added icons and splashscreen
+  - https://enappd.com/blog/icon-splash-in-ionic-react-capacitor-apps/114/
+- 
 ## 0.2.0
 - better android app creation (package.json script)
 - start menu configuration
