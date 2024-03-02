@@ -24,6 +24,7 @@ export enum CardsPool {
     IRREGULAR = 'IRREGULAR',
     SAVED = 'SAVED',
     TEST = 'TEST',
+    NEW = 'NEW',
 }
 
 export type Configuration = {

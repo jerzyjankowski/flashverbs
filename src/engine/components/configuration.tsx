@@ -20,6 +20,7 @@ function Configuration() {
                 <ConfigurationButton label="IRREGULAR" value={CardsPool.IRREGULAR} realValue={configuration.cardsPool} callback={setCardsPool} />
                 <ConfigurationButton label="SAVED" value={CardsPool.SAVED} realValue={configuration.cardsPool} callback={setCardsPool} />
                 <ConfigurationButton label="TEST" value={CardsPool.TEST} realValue={configuration.cardsPool} callback={setCardsPool} />
+                <ConfigurationButton label="NEW" value={CardsPool.NEW} realValue={configuration.cardsPool} callback={setCardsPool} />
             </div>
             <h5>MAX NUMBER OF CARDS</h5>
             <div className="configurationButtons">

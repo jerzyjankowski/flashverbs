@@ -10,6 +10,7 @@ const Engine = () => {
     const [ currentCard, setCurrentCard ] = useState<Card>()
     const [ questionTurn, setQuestionTurn ] = useState(true)
     const [ showConjugation, setShowConjugation ] = useState(false)
+    const [ answerConjugation, setAnswerConjugation ] = useState(0)
     const [ leftToLearn, setLeftToLearn ] = useState(0)
     const [ turn, setTurn ] = useState(1)
     const [ settingsModalOpen, setSettingsModalOpen ] = useState(false)
@@ -47,6 +48,8 @@ const Engine = () => {
             cardsToRandomize = [...config.irregular]
         } else if (cardsPool === CardsPool.TEST) {
             cardsToRandomize = [...config.test]
+        } else if (cardsPool === CardsPool.NEW) {
+            cardsToRandomize = [...config.newOrHard]
         }
         const cards = []
         for (let i = 0; i < maxNumberOfCards && cardsToRandomize.length > 0; i++) {
@@ -119,6 +122,10 @@ const Engine = () => {
 
     const getSettingsModal = () => {
         const hideModal = () => setSettingsModalOpen(false)
+        const displayConjugation = () => {
+            setShowConjugation(true)
+            hideModal()
+        }
         const restartQuestions = () => {
             const newFlashcards = flashcards.map(card => ({ ...card, learnt: false }))
             setFlashcards(newFlashcards)
@@ -136,10 +143,12 @@ const Engine = () => {
         const saveQuestions = () => {
             const questionsIds = flashcards.filter(card => !card.learnt).map(card => card.id)
             localStorage.setItem("questions", `${JSON.stringify(questionsIds)}`)
+            hideModal()
         }
         return settingsModalOpen && <div className="settingsModalWrapper" onClick={hideModal}>
           <div className="settingsModal" onClick={event => event.stopPropagation()}>
             <h1>SETTINGS</h1>
+            <button onClick={displayConjugation}>show conjugation</button>
             <button onClick={reverseQuestions}>reverse questions</button>
             <button onClick={restartQuestions}>restart questions</button>
             <button onClick={saveQuestions}>save hard questions</button>
@@ -180,28 +189,49 @@ const Engine = () => {
         }
     }
 
+    const getAnswerText = () => {
+        if (questionTurn || !currentCard) {
+            return '?'
+        } else if (!configuration.fromNative) {
+            return currentCard.pl
+        } else {
+            switch(answerConjugation) {
+                case 0: return currentCard.it
+                case 1: return `io ${currentCard.presentIndicative.singular.first}`
+                case 2: return `tu ${currentCard.presentIndicative.singular.second}`
+                case 3: return `lui ${currentCard.presentIndicative.singular.third}`
+                case 4: return `noi ${currentCard.presentIndicative.plural.first}`
+                case 5: return `voi ${currentCard.presentIndicative.plural.second}`
+                case 6: return `loro ${currentCard.presentIndicative.plural.third}`
+            }
+        }
+    }
+
     return (
         <div className="wrapper">
             {getSettingsModal()}
             {getHeader()}
-            {currentCard && !showConjugation && <div className="card" onClick={openSettingsModal}>
-                {configuration.fromNative ? currentCard.pl : currentCard.it}
-            </div>}
-            {currentCard && !showConjugation && <div className="card" onClick={() => questionTurn ? null : setShowConjugation(true)}>
-                {questionTurn ? '?' : configuration.fromNative ? currentCard.it : currentCard.pl}
-            </div>}
+            {currentCard && !showConjugation && <div className="cards">
+                    <div className="card" onClick={openSettingsModal}>
+                        {configuration.fromNative ? currentCard.pl : currentCard.it}
+                    </div>
+                    <div className="card" onClick={() => questionTurn ? null : setAnswerConjugation(x => (x + 1) % 7)}>
+                        {getAnswerText()}
+                    </div>
+            </div>
+            }
             {currentCard && showConjugation && <div className="card conjugation" onClick={() => setShowConjugation(false)}>
-              <span>{currentCard.pl}</span>
-              <span>-------</span>
-              <span>{currentCard.it}</span>
-              <span>-------</span>
-              <span>{currentCard.presentIndicative.singular.first}</span>
-              <span>{currentCard.presentIndicative.singular.second}</span>
-              <span>{currentCard.presentIndicative.singular.third}</span>
-              <span>-------</span>
-              <span>{currentCard.presentIndicative.plural.first}</span>
-              <span>{currentCard.presentIndicative.plural.second}</span>
-              <span>{currentCard.presentIndicative.plural.third}</span>
+                <span>{currentCard.pl}</span>
+                <span>-------</span>
+                <span>{currentCard.it}</span>
+                <span>-------</span>
+                <span>{currentCard.presentIndicative.singular.first}</span>
+                <span>{currentCard.presentIndicative.singular.second}</span>
+                <span>{currentCard.presentIndicative.singular.third}</span>
+                <span>-------</span>
+                <span>{currentCard.presentIndicative.plural.first}</span>
+                <span>{currentCard.presentIndicative.plural.second}</span>
+                <span>{currentCard.presentIndicative.plural.third}</span>
             </div>}
             {!currentCard && <div className="card"><Configuration /></div>}
             {getFooter()}

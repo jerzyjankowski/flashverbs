@@ -1,6 +1,10 @@
 # Backlog
 - verbs for other languages than italian
-- refactor, styled comopnents, split into comopnents, etc.
+- refactor, styled components, split into comopnents, etc.
+- english version of polish translations
+- learning verb conjugation (all 6 versions) in different learning type
+- card in questions has different type than card in configs (initialized learning fields can be mandatory)
+- passing time visible in card's background working as a bar getting smaller (~10s per flashcard)
 
 # Run app on Android
 
@@ -22,6 +26,9 @@ Android Studio will run. After loading time run app on connected Android phone.
 ## 0.2.1
 - added icons and splashscreen
   - https://enappd.com/blog/icon-splash-in-ionic-react-capacitor-apps/114/
+  - added 'NEW' category
+  - height fixes for iOS chrome: 100dvh instead 100vh, white background buttons to keep height (?)
+  - clicking Italian answer card goes through conjugation
 - 
 ## 0.2.0
 - better android app creation (package.json script)
