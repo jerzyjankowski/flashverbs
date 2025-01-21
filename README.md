@@ -23,6 +23,9 @@ Android Studio will run. After loading time run app on connected Android phone.
 
 # Versions
 
+## 0.2.3
+- spanish verbs
+
 ## 0.2.2
 - counting rounds in same speed (how many times all cards were asked about at minimum + 1)
 - coloring border and header to darkred in case of last card in round
