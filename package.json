@@ -1,6 +1,7 @@
 {
   "name": "italian-flashcards-web",
-  "version": "0.2.1",
+  "version": "0.3.0",
+  "homepage": "https://jerzyjankowski.github.io/flashverbs",
   "private": true,
   "dependencies": {
     "@capacitor/android": "5.5.1",
@@ -21,6 +22,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -47,6 +50,7 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "^5.5.1"
+    "@capacitor/cli": "^5.5.1",
+    "gh-pages": "^6.3.0"
   }
 }
