@@ -13,6 +13,8 @@ const Engine = () => {
     const [ answerConjugation, setAnswerConjugation ] = useState(0)
     const [ leftToLearn, setLeftToLearn ] = useState(0)
     const [ turn, setTurn ] = useState(1)
+    const [ round, setRound ] = useState(0) // only for same speed
+    const [ lastCardInRound, setLastCardInRound ] = useState(false) // only for same speed
     const [ settingsModalOpen, setSettingsModalOpen ] = useState(false)
     const [ startTime, setStartTime ] = useState(new Date().getTime())
     const [ displayTime, setDisplayTime ] = useState('00:00')
@@ -66,8 +68,10 @@ const Engine = () => {
         setShowConjugation(false)
         setQuestionTurn(true)
         setTurn(1)
+        setRound(1)
         setFlashcards(cards)
         setLeftToLearn(cards.length)
+        setLastCardInRound(false)
         setStartTime(new Date().getTime())
         return cards
     }
@@ -79,6 +83,8 @@ const Engine = () => {
         if (configuration.sameSpeed) {
             const minRepetitions = Math.min(...cardsToRandomize.map(card => card.repetitions || 0))
             cardsToRandomize = cardsToRandomize.filter(card => card.repetitions === minRepetitions)
+            setRound(minRepetitions + 1)
+            setLastCardInRound(cardsToRandomize.length === 1)
         }
         const cardId = Math.floor(Math.random() * cardsToRandomize.length)
         setCurrentCard(cardsToRandomize[cardId])
@@ -164,7 +170,7 @@ const Engine = () => {
 
     const getHeader = () => {
         return currentCard && <div className="header">
-            Turn: {turn}, Flashcards left: {leftToLearn}, Time: {displayTime}
+            Turn: {configuration.sameSpeed ? `${round}/` : ''}{turn}, Flashcards left: {leftToLearn}, Time: {displayTime}
         </div>
     }
 
@@ -208,7 +214,7 @@ const Engine = () => {
     }
 
     return (
-        <div className="wrapper">
+        <div className={`wrapper ${lastCardInRound ? 'lastCardWrapper' : ''}`}>
             {getSettingsModal()}
             {getHeader()}
             {currentCard && !showConjugation && <div className="cards">

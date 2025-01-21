@@ -23,12 +23,16 @@ Android Studio will run. After loading time run app on connected Android phone.
 
 # Versions
 
+## 0.2.2
+- counting rounds in same speed (how many times all cards were asked about at minimum + 1)
+- coloring border and header to darkred in case of last card in round
+
 ## 0.2.1
 - added icons and splashscreen
   - https://enappd.com/blog/icon-splash-in-ionic-react-capacitor-apps/114/
-  - added 'NEW' category
-  - height fixes for iOS chrome: 100dvh instead 100vh, white background buttons to keep height (?)
-  - clicking Italian answer card goes through conjugation
+- added 'NEW' category
+- height fixes for iOS chrome: 100dvh instead 100vh, white background buttons to keep height (?)
+- clicking Italian answer card goes through conjugation
 - 
 ## 0.2.0
 - better android app creation (package.json script)
