@@ -22,6 +22,9 @@ npx cap open android
 Android Studio will run. After loading time run app on connected Android phone.
 
 # Versions
+## 0.2.4
+- moving to GitHub - (https://github.com/jerzyjankowski/flashverbs)
+- from BitBucket (https://bitbucket.org/jurij555/italian-flashcards-web/src/main/)
 
 ## 0.2.3
 - spanish verbs
